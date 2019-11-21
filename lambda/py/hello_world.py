@@ -5,7 +5,6 @@
 # session persistence, api calls, and more.
 # This sample is built using the handler classes approach in skill builder.
 import logging
-import gettext
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import (
@@ -14,11 +13,16 @@ import ask_sdk_core.utils as ask_utils
 from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
-from alexa import data
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+WELCOME_MESSAGE = "Hello Python World from Classes"
+HELLO_MSG = "Hello Python World from Classes!"
+HELP_MSG = "You can say hello to me! How can I help?"
+GOODBYE_MSG = "Goodbye!"
+REFLECTOR_MSG = "You just triggered {}"
+ERROR = "Sorry, I had trouble doing what you asked. Please try again."
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
@@ -31,7 +35,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         _ = handler_input.attributes_manager.request_attributes["_"]
-        speak_output = _(data.WELCOME_MESSAGE)
+        speak_output = WELCOME_MESSAGE
 
         return (
             handler_input.response_builder
@@ -51,7 +55,7 @@ class HelloWorldIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         _ = handler_input.attributes_manager.request_attributes["_"]
-        speak_output = _(data.HELLO_MSG)
+        speak_output = HELLO_MSG
 
         return (
             handler_input.response_builder
@@ -71,7 +75,7 @@ class HelpIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         _ = handler_input.attributes_manager.request_attributes["_"]
-        speak_output = _(data.HELP_MSG)
+        speak_output = HELP_MSG
 
         return (
             handler_input.response_builder
@@ -92,7 +96,7 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         _ = handler_input.attributes_manager.request_attributes["_"]
-        speak_output = _(data.GOODBYE_MSG)
+        speak_output = GOODBYE_MSG
 
         return (
             handler_input.response_builder
@@ -131,7 +135,7 @@ class IntentReflectorHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         _ = handler_input.attributes_manager.request_attributes["_"]
         intent_name = ask_utils.get_intent_name(handler_input)
-        speak_output = _(data.REFLECTOR_MSG).format(intent_name)
+        speak_output = REFLECTOR_MSG.format(intent_name)
 
         return (
             handler_input.response_builder
@@ -155,7 +159,7 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
         # type: (HandlerInput, Exception) -> Response
         logger.error(exception, exc_info=True)
         _ = handler_input.attributes_manager.request_attributes["_"]
-        speak_output = _(data.ERROR)
+        speak_output = ERROR
 
         return (
             handler_input.response_builder
