@@ -165,16 +165,15 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
         )
 
 
-class LocalizationInterceptor(AbstractRequestInterceptor):
+class GenericRequestInterceptor(AbstractRequestInterceptor):
     """
-    Add function to request attributes, that can load locale specific data
+    Log the Request
     """
 
     def process(self, handler_input):
-        locale = handler_input.request_envelope.request.locale
-        i18n = gettext.translation(
-            'data', localedir='locales', languages=[locale], fallback=True)
-        handler_input.attributes_manager.request_attributes["_"] = i18n.gettext
+        print("---- BEGIN HANDLER INPUT ----")
+        print("Alexa Request: {}\n".format(handler_input.request_envelope.request))
+        print("---- END HANDLER INPUT ----")
 
 # The SkillBuilder object acts as the entry point for your skill, routing all request and response
 # payloads to the handlers above. Make sure any new handlers or interceptors you've
@@ -191,7 +190,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 # make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
 sb.add_request_handler(IntentReflectorHandler())
 
-sb.add_global_request_interceptor(LocalizationInterceptor())
+sb.add_global_request_interceptor(GenericRequestInterceptor())
 
 sb.add_exception_handler(CatchAllExceptionHandler())
 
