@@ -34,7 +34,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        _ = handler_input.attributes_manager.request_attributes["_"]
         speak_output = WELCOME_MESSAGE
 
         return (
@@ -54,7 +53,6 @@ class HelloWorldIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        _ = handler_input.attributes_manager.request_attributes["_"]
         speak_output = HELLO_MSG
 
         return (
@@ -74,7 +72,6 @@ class HelpIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        _ = handler_input.attributes_manager.request_attributes["_"]
         speak_output = HELP_MSG
 
         return (
@@ -95,7 +92,6 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        _ = handler_input.attributes_manager.request_attributes["_"]
         speak_output = GOODBYE_MSG
 
         return (
@@ -133,7 +129,6 @@ class IntentReflectorHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        _ = handler_input.attributes_manager.request_attributes["_"]
         intent_name = ask_utils.get_intent_name(handler_input)
         speak_output = REFLECTOR_MSG.format(intent_name)
 
@@ -158,7 +153,6 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
     def handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> Response
         logger.error(exception, exc_info=True)
-        _ = handler_input.attributes_manager.request_attributes["_"]
         speak_output = ERROR
 
         return (
